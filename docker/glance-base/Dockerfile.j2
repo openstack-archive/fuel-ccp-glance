@@ -1,0 +1,18 @@
+FROM {{ namespace }}/openstack-base:{{ tag }}
+MAINTAINER {{ maintainer }}
+
+RUN curl -o glance-{{ branch }}.tar.gz http://tarballs.openstack.org/glance/glance-{{ branch }}.tar.gz \
+    && tar -zxvf glance-{{ branch }}.tar.gz
+
+RUN mv glance*/ glance-{{ branch }}/ \
+    &&  ln -s glance-{{ branch }} /glance \
+    && useradd --user-group glance \
+    && /var/lib/microservices/venv/bin/pip --no-cache-dir install --upgrade -c /glance/requirements.txt /glance \
+    && mkdir -p /var/lib/glance /etc/glance \
+    && chown -R glance: /var/lib/glance \
+    && cp -r /glance/etc/* /etc/glance
+
+RUN apt-get -y install --no-install-recommends \
+        python-rbd \
+        python-rados \
+    && apt-get clean

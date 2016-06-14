@@ -1,0 +1,43 @@
+service:
+    name: glance-api
+    ports:
+        - glance_api_port
+    # TODO(sreshetniak): add probes
+    container:
+        node-selector:
+            openstack-controller: "true"
+    probes:
+        readiness: "true"
+        liveness: "true"
+    pre:
+        - name: glance-db-create
+          dependencies:
+              - mariadb
+          type: single
+          command:
+              mysql -u root -p{{ db_root_password }} -h mariadb -e "create database {{ glance_db_name }};
+              grant all privileges on {{ glance_db_name }}.* to '{{ glance_db_username }}'@'%' identified by '{{ glance_db_password }}';"
+        - name: glance-db-sync
+          files:
+              - glance-api
+          dependencies:
+              - glance-db-create
+          type: single
+          command: glance-manage db_sync
+        - name: glance-service-registry
+          dependencies:
+              - keystone
+          type: single
+          command:
+              glance-service-registry.sh keystone {{ keystone_admin_port }} {{ openstack_user_name }} {{ openstack_user_password }}
+              {{ openstack_project_name }} default {{ glance_user }} {{ glance_password }}
+    daemon:
+        name: glance-api
+        files:
+            - glance-api
+        command: glance-api
+
+files:
+    glance-api:
+        path: /etc/glance/glance-api.conf
+        content: glance-api.conf.j2
