@@ -1,23 +1,23 @@
 service:
-    name: glance-registry
-    ports:
-        - glance_registry_port
-    # TODO(sreshetniak): add probes
-    container:
-        node-selector:
-            openstack-controller: "true"
-    probes:
+  name: glance-registry
+  ports:
+    - glance_registry_port
+  containers:
+    - name: glance-registry
+      image: glance-registry
+      # TODO(sreshetniak): add probes
+      probes:
         readiness: "true"
         liveness: "true"
-    daemon:
+      daemon:
         name: glance-registry
         files:
-            - glance-registry-conf
+          - glance-registry-conf
         dependencies:
-            - glance-api
+          - glance-api
         command: glance-registry
 
 files:
-    glance-registry-conf:
-        path: /etc/glance/glance-registry.conf
-        content: glance-registry.conf.j2
+  glance-registry-conf:
+    path: /etc/glance/glance-registry.conf
+    content: glance-registry.conf.j2
