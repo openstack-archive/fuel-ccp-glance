@@ -1,7 +1,8 @@
 service:
   name: glance-api
   ports:
-    - glance_api_port
+    - port: glance_api_port
+      ingress: glance_external_path
   node-selector:
     openstack-controller: "true"
   containers:
@@ -37,9 +38,13 @@ service:
         name: glance-api
         files:
           - glance-api
+          - glance-api-paste
         command: glance-api
 
 files:
   glance-api:
     path: /etc/glance/glance-api.conf
     content: glance-api.conf.j2
+  glance-api-paste:
+    path: /etc/glance/glance-api-paste.ini
+    content: glance-api-paste.ini.j2

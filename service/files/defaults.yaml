@@ -12,3 +12,5 @@ configs:
     glance_memcache_secret_key: secret_key
 
     glance_debug: false
+
+    glance_external_path: /image

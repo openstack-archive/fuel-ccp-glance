@@ -1,7 +1,7 @@
 service:
   name: glance-registry
   ports:
-    - glance_registry_port
+    - port: glance_registry_port
   containers:
     - name: glance-registry
       image: glance-registry
