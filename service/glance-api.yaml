@@ -26,13 +26,36 @@ service:
             - glance-db-create
           type: single
           command: glance-manage db_sync
-        - name: glance-service-registry
+        - name: glance-user-create
           dependencies:
             - keystone
           type: single
-          command:
-            glance-service-registry.sh keystone {{ keystone_admin_port }} {{ openstack_user_name }} {{ openstack_user_password }}
-            {{ openstack_project_name }} default {{ glance_user }} {{ glance_password }}
+          command: openstack user create --domain default --password {{ glance_password  }} {{ glance_user }}
+        - name: glance-role-add
+          dependencies:
+            - glance-user-create
+          type: single
+          command: openstack role add --project {{ openstack_project_name }} --user {{ glance_user }} admin
+        - name: glance-service-create
+          dependencies:
+            - keystone
+          type: single
+          command: openstack service create --name glance --description "OpenStack Image service" image
+        - name: glance-public-endpoint-create
+          dependencies:
+            - glance-service-create
+          type: single
+          command: openstack endpoint create --region RegionOne image public http://glance-api:{{ glance_api_port }}
+        - name: glance-internal-endpoint-create
+          dependencies:
+            - glance-service-create
+          type: single
+          command: openstack endpoint create --region RegionOne image internal http://glance-api:{{ glance_api_port }}
+        - name: glance-admin-endpoint-create
+          dependencies:
+            - glance-service-create
+          type: single
+          command: openstack endpoint create --region RegionOne image admin http://glance-api:{{ glance_api_port }}
       daemon:
         name: glance-api
         files:
