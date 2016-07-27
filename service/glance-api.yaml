@@ -2,8 +2,6 @@ service:
   name: glance-api
   ports:
     - glance_api_port
-  node-selector:
-    openstack-controller: "true"
   containers:
     - name: glance-api
       image: glance-api
