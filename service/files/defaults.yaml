@@ -1,14 +1,19 @@
 configs:
-    glance_api_port: 9292
-    glance_registry_port: 9191
+  glance_api_port: 9292
+  glance_registry_port: 9191
 
-    glance_db_username: glance
-    glance_db_password: password
-    glance_db_name: glance
+  glance_db_username: glance
+  glance_db_password: password
+  glance_db_name: glance
 
-    glance_user: glance
-    glance_password: password
+  glance_user: glance
+  glance_password: password
 
-    glance_memcache_secret_key: secret_key
+  glance_memcache_secret_key: secret_key
 
-    glance_debug: false
+  glance_debug: false
+
+sources:
+  openstack/glance:
+    git_url: https://github.com/openstack/glance.git
+    git_ref: master
