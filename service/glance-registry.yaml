@@ -10,7 +10,6 @@ service:
         readiness: "true"
         liveness: "true"
       daemon:
-        name: glance-registry
         files:
           - glance-registry-conf
         dependencies:

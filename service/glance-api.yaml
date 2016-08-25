@@ -55,7 +55,6 @@ service:
           type: single
           command: openstack endpoint create --region RegionOne image admin http://glance-api:{{ glance_api_port }}
       daemon:
-        name: glance-api
         files:
           - glance-api
         command: glance-api
