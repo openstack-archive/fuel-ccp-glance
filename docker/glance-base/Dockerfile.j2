@@ -8,8 +8,3 @@ RUN useradd --user-group glance \
     && mkdir -p /var/lib/glance /etc/glance \
     && chown -R glance: /var/lib/glance \
     && cp -r /glance/etc/* /etc/glance
-
-RUN apt-get -y install --no-install-recommends \
-        python-rbd \
-        python-rados \
-    && apt-get clean
