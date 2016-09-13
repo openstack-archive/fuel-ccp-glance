@@ -1,7 +1,7 @@
 service:
   name: glance-api
   ports:
-    - glance_api_port
+    - {{ glance_api_port }}
   containers:
     - name: glance-api
       image: glance-api
