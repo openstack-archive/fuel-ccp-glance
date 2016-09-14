@@ -9,8 +9,6 @@ configs:
   glance_user: glance
   glance_password: password
 
-  glance_memcache_secret_key: secret_key
-
   glance_debug: false
 
 sources:
