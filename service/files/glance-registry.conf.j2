@@ -13,19 +13,19 @@ registry_host = glance-registry
 cinder_catalog_info = volume:cinder:internalURL
 
 [database]
-connection = mysql+pymysql://{{ glance_db_username }}:{{ glance_db_password }}@mariadb/{{ glance_db_name }}
+connection = mysql+pymysql://{{ glance_db_username }}:{{ glance_db_password }}@{{ address('mariadb') }}/{{ glance_db_name }}
 max_retries = -1
 
 [keystone_authtoken]
-auth_uri = http://keystone:{{ keystone_public_port }}
-auth_url = http://keystone:{{ keystone_admin_port }}
+auth_uri = http://{{ address('keystone') }}:{{ keystone_public_port }}
+auth_url = http://{{ address('keystone') }}:{{ keystone_admin_port }}
 auth_type = password
 project_domain_id = default
 user_domain_id = default
 project_name = service
 username = {{ glance_user }}
 password = {{ glance_password }}
-memcached_servers = memcached:{{ memcached_port }}
+memcached_servers = {{ address('memcached') }}:{{ memcached_port }}
 
 [paste_deploy]
 flavor = keystone
