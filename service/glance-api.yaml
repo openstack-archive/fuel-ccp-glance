@@ -58,8 +58,15 @@ service:
         files:
           - glance-api
         command: glance-api
+      post:
+        - name: glance-cirros-image-upload
+          type: single
+          command: /opt/ccp/bin/glance-cirros-image-upload.sh
 
 files:
   glance-api:
     path: /etc/glance/glance-api.conf
     content: glance-api.conf.j2
+
+  glance-cirros-image-upload.sh:
+    path: /opt/ccp/bin/glance-cirros-image-upload.sh
