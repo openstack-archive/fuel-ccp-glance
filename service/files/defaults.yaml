@@ -26,6 +26,13 @@ configs:
       store_create_container_on_put: true
       store_container: glance
 
+    bootstrap:
+      enable: false
+      image:
+        url: http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-disk.img
+        disk_format: qcow2
+        name: cirros
+
 sources:
   openstack/glance:
     git_url: https://github.com/openstack/glance.git
