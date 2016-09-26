@@ -67,6 +67,14 @@ service:
           - glance-swift-conf
           # {% endif %}
         command: glance-api
+      # {% if glance.bootstrap.enable %}
+      post:
+        - name: glance-cirros-image-upload
+          type: single
+          command: /opt/ccp/bin/glance-cirros-image-upload.sh
+          files:
+            - glance-cirros-image-upload.sh
+      # {% endif %}
 
 files:
   glance-api:
@@ -81,3 +89,7 @@ files:
   glance-swift-conf:
     path: /etc/glance/glance-swift-store.conf
     content: glance-swift-store.conf.j2
+  glance-cirros-image-upload.sh:
+    path: /opt/ccp/bin/glance-cirros-image-upload.sh
+    content: glance-cirros-image-upload.sh.j2
+    perm: "500"
