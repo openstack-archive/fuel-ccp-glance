@@ -1,0 +1,17 @@
+#!/bin/bash
+set -ex
+
+export OS_IDENTITY_API_VERSION=3
+export OS_INTERFACE="internal"
+export OS_PROJECT_DOMAIN_NAME=default
+export OS_USER_DOMAIN_NAME=default
+export OS_PASSWORD={{ openstack.user_password }}
+export OS_USERNAME={{ openstack.user_name }}
+export OS_PROJECT_NAME={{ openstack.project_name }}
+export OS_AUTH_URL="http://{{ address('keystone') }}:{{ keystone.admin_port.cont }}/v3"
+
+{% set image = glance.bootstrap.image %}
+FILE="$(mktemp)"
+curl {{ image.url }} -o "${FILE}"
+openstack image create --public --disk-format {{ image.disk_format }} --file "${FILE}" {{ image.name }}
+rm "${FILE}"
