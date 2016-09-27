@@ -1,6 +1,8 @@
 FROM {{ namespace }}/openstack-base:{{ tag }}
 MAINTAINER {{ maintainer }}
 
+RUN apt-get install -y -t jessie-backports --no-install-recommends ceph-common python-ceph
+
 {{ copy_sources("openstack/glance", "/glance") }}
 
 RUN useradd --user-group glance \
