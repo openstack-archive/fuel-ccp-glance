@@ -57,9 +57,19 @@ service:
       daemon:
         files:
           - glance-api
+{%        if glance_enable_ceph %}
+          - ceph-conf
+          - glance-ceph-key
+{%        endif %}
         command: glance-api
 
 files:
   glance-api:
     path: /etc/glance/glance-api.conf
     content: glance-api.conf.j2
+  ceph-conf:
+    path: /etc/ceph/ceph.conf
+    content: ceph.conf.j2
+  glance-ceph-key:
+    path: /etc/ceph/ceph.client.glance.keyring
+    content: ceph.client.glance.keyring.j2

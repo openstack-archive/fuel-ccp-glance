@@ -1,6 +1,12 @@
 FROM {{ namespace }}/openstack-base:{{ tag }}
 MAINTAINER {{ maintainer }}
 
+COPY sources.list.debian /etc/apt/sources.list.d/ceph.list
+RUN apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 460F3994
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends ceph-common python-ceph python-rados \
+    && apt-get clean
+
 {{ copy_sources("openstack/glance", "/glance") }}
 
 RUN useradd --user-group glance \
