@@ -11,6 +11,14 @@ configs:
 
   glance_debug: false
 
+  glance_enable_ceph: false
+  glance_ceph_username: "glance"
+  glance_ceph_pool_name: "images"
+  glance_ceph_key: "Changeme"
+  glance_ceph_fsid: "Changeme"
+  glance_ceph_initial_members: "Changeme"
+  glance_ceph_mon_host: "Changeme"
+
 sources:
   openstack/glance:
     git_url: https://github.com/openstack/glance.git

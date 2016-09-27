@@ -9,7 +9,9 @@ bind_host = {{ network_topology["private"]["address"] }}
 bind_port = {{ glance_api_port }}
 
 registry_host = glance-registry
-
+{% if glance_enable_ceph %}
+show_image_direct_url = True
+{% endif %}
 
 cinder_catalog_info = volume:cinder:internalURL
 
@@ -33,8 +35,22 @@ memcached_servers = {{ address('memcached') }}:{{ memcached_port }}
 flavor = keystone
 
 [glance_store]
+{% if glance_enable_ceph %}
+stores = rbd
+default_store = rbd
+rbd_store_pool = {{ glance_ceph_pool_name }}
+rbd_store_user = {{ glance_ceph_username }}
+rbd_store_ceph_conf = /etc/ceph/ceph.conf
+{% else %}
 default_store = file
 filesystem_store_datadir = /var/lib/glance/images/
+{% endif %}
+
+{% if glance_enable_ceph %}
+[image_format]
+container_formats = bare
+disk_formats = raw
+{% endif %}
 
 [oslo_messaging_notifications]
 driver = noop
