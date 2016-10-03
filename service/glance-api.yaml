@@ -15,7 +15,7 @@ service:
             - mariadb
           type: single
           command:
-            mysql -u root -p{{ db_root_password }} -h mariadb -e "create database {{ glance_db_name }};
+            mysql -u root -p{{ db_root_password }} -h {{ address('mariadb') }} -e "create database {{ glance_db_name }};
             grant all privileges on {{ glance_db_name }}.* to '{{ glance_db_username }}'@'%' identified by '{{ glance_db_password }}';"
         - name: glance-db-sync
           files:
