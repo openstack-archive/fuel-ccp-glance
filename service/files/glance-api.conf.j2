@@ -26,7 +26,7 @@ user_domain_id = default
 project_name = {{ openstack.project_name }}
 username = {{ glance_user }}
 password = {{ glance_password }}
-memcached_servers = {{ address('memcached') }}:{{ memcached_port }}
+memcached_servers = {{ address('memcached') }}:{{ memcached.port }}
 
 
 [paste_deploy]
