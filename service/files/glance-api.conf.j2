@@ -33,8 +33,15 @@ memcached_servers = {{ address('memcached') }}:{{ memcached.port }}
 flavor = keystone
 
 [glance_store]
-default_store = file
+stores = file, swift
+default_store = {{ glance_default_store }}
 filesystem_store_datadir = /var/lib/glance/images/
+swift_store_auth_version = 1
+swift_store_auth_address = {{ glance_swift_store_auth_address }}
+swift_store_user = {{ glance_swift_store_user }}
+swift_store_key = {{ glance_swift_store_key }}
+swift_store_container = {{ glance_swift_store_container }}
+swift_store_create_container_on_put = True
 
 [oslo_messaging_notifications]
 driver = noop

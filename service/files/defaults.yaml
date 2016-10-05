@@ -11,6 +11,12 @@ configs:
 
   glance_debug: false
 
+  glance_default_store: file
+  glance_swift_store_auth_address: http://10.20.0.1:7480/auth/1.0
+  glance_swift_store_user: glance:swift
+  glance_swift_store_key: password
+  glance_swift_store_container: glance
+
 sources:
   openstack/glance:
     git_url: https://github.com/openstack/glance.git
