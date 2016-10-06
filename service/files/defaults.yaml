@@ -1,15 +1,17 @@
 configs:
-  glance_api_port: 9292
-  glance_registry_port: 9191
+  glance:
+    api_port: 9292
+    registry_port: 9191
 
-  glance_db_username: glance
-  glance_db_password: password
-  glance_db_name: glance
+    db:
+      username: glance
+      password: password
+      name: glance
 
-  glance_user: glance
-  glance_password: password
+    user: glance
+    password: password
 
-  glance_debug: false
+    debug: false
 
 sources:
   openstack/glance:
