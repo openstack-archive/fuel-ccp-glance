@@ -1,10 +1,13 @@
 FROM {{ image_spec("openstack-base") }}
 MAINTAINER {{ maintainer }}
 
+COPY sources.list.debian /etc/apt/sources.list.d/ceph.list
+
 {{ copy_sources("openstack/glance", "/glance") }}
 
 RUN useradd --user-group glance \
+    && apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 460F3994 \
     && /var/lib/microservices/venv/bin/pip install --upgrade /glance \
-    && mkdir -p /var/lib/glance /etc/glance /etc/ceph \
+    && mkdir -p /var/lib/glance /etc/glance \
     && cp -r /glance/etc/* /etc/glance \
-    && chown -R glance: /etc/glance /var/lib/glance /etc/ceph
+    && chown -R glance: /etc/glance /var/lib/glance
