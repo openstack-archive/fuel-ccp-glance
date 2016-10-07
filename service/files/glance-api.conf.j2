@@ -41,6 +41,14 @@ default_store = rbd
 rbd_store_pool = {{ glance.ceph.pool_name }}
 rbd_store_user = {{ glance.ceph.username }}
 rbd_store_ceph_conf = /etc/ceph/ceph.conf
+{% elif glance.swift.enable %}
+stores = swift
+default_store = swift
+swift_store_create_container_on_put = {{ glance.swift.store_create_container_on_put }}
+swift_store_region = RegionOne
+default_swift_reference = swift
+swift_store_container = {{ glance.swift.store_container }}
+swift_store_config_file = /etc/glance/glance-swift-store.conf
 {% else %}
 default_store = file
 filesystem_store_datadir = /var/lib/glance/images/
