@@ -61,6 +61,9 @@ service:
           - ceph-conf
           - glance-ceph-key
           # {% endif %}
+          # {% if glance.swift.enable %}
+          - glance-swift-conf
+          # {% endif %}
         command: glance-api
 
 files:
@@ -73,3 +76,6 @@ files:
   glance-ceph-key:
     path: /etc/ceph/ceph.client.glance.keyring
     content: ceph.client.glance.keyring.j2
+  glance-swift-conf:
+    path: /etc/glance/glance-swift-store.conf
+    content: glance-swift-store.conf.j2
