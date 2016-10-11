@@ -6,5 +6,5 @@ MAINTAINER {{ maintainer }}
 RUN useradd --user-group glance \
     && /var/lib/microservices/venv/bin/pip --no-cache-dir install --upgrade -c /glance/requirements.txt /glance \
     && mkdir -p /var/lib/glance /etc/glance \
-    && chown -R glance: /var/lib/glance \
-    && cp -r /glance/etc/* /etc/glance
+    && cp -r /glance/etc/* /etc/glance \
+    && chown -R glance: /etc/glance /var/lib/glance
