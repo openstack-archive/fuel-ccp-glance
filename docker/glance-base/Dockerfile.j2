@@ -4,7 +4,7 @@ MAINTAINER {{ maintainer }}
 {{ copy_sources("openstack/glance", "/glance") }}
 
 RUN useradd --user-group glance \
-    && /var/lib/microservices/venv/bin/pip --no-cache-dir install --upgrade -c /glance/requirements.txt /glance \
+    && /var/lib/microservices/venv/bin/pip install --upgrade /glance \
     && mkdir -p /var/lib/glance /etc/glance \
     && cp -r /glance/etc/* /etc/glance \
     && chown -R glance: /etc/glance /var/lib/glance
