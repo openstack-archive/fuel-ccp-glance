@@ -1,7 +1,9 @@
 configs:
   glance:
-    api_port: 9292
-    registry_port: 9191
+    api_port:
+      cont: 9292
+    registry_port:
+      cont: 9191
 
     db:
       username: glance
