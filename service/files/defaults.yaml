@@ -2,9 +2,9 @@ configs:
   glance:
     api_port:
       cont: 9292
+      ingress: image
     registry_port:
       cont: 9191
-
     db:
       username: glance
       password: password

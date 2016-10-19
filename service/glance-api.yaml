@@ -45,7 +45,7 @@ service:
           dependencies:
             - glance-service-create
           type: single
-          command: openstack endpoint create --region RegionOne image public http://{{ address('glance-api') }}:{{ glance.api_port.cont }}
+          command: openstack endpoint create --region RegionOne image public http://{{ address('glance-api', glance.api_port, external=True) }}
         - name: glance-internal-endpoint-create
           dependencies:
             - glance-service-create
