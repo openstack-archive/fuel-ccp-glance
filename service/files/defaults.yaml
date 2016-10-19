@@ -4,7 +4,7 @@ configs:
       cont: 9292
     registry_port:
       cont: 9191
-
+      ingress: image
     db:
       username: glance
       password: password
