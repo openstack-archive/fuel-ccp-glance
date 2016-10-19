@@ -5,6 +5,6 @@ MAINTAINER {{ maintainer }}
 
 RUN useradd --user-group glance \
     && /var/lib/microservices/venv/bin/pip install --upgrade /glance \
-    && mkdir -p /var/lib/glance /etc/glance \
+    && mkdir -p /var/lib/glance /etc/glance /etc/ceph \
     && cp -r /glance/etc/* /etc/glance \
-    && chown -R glance: /etc/glance /var/lib/glance
+    && chown -R glance: /etc/glance /var/lib/glance /etc/ceph
