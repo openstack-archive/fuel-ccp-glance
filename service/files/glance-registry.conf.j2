@@ -6,7 +6,7 @@ use_stderr = True
 use_forwarded_for = True
 
 bind_host = {{ network_topology["private"]["address"] }}
-bind_port = {{ glance.registry_port }}
+bind_port = {{ glance.registry_port.cont }}
 
 registry_host = glance-registry
 
@@ -17,15 +17,15 @@ connection = mysql+pymysql://{{ glance.db.username }}:{{ glance.db.password }}@{
 max_retries = -1
 
 [keystone_authtoken]
-auth_uri = http://{{ address('keystone') }}:{{ keystone.public_port }}
-auth_url = http://{{ address('keystone') }}:{{ keystone.admin_port }}
+auth_uri = http://{{ address('keystone') }}:{{ keystone.public_port.cont }}
+auth_url = http://{{ address('keystone') }}:{{ keystone.admin_port.cont }}
 auth_type = password
 project_domain_id = default
 user_domain_id = default
 project_name = service
 username = {{ glance.user }}
 password = {{ glance.password }}
-memcached_servers = {{ address('memcached') }}:{{ memcached.port }}
+memcached_servers = {{ address('memcached') }}:{{ memcached.port.cont }}
 
 [paste_deploy]
 flavor = keystone
