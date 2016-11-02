@@ -12,6 +12,8 @@ registry_host = glance-registry
 
 cinder_catalog_info = volume:cinder:internalURL
 
+show_multiple_locations = True
+
 [database]
 connection = mysql+pymysql://{{ glance.db.username }}:{{ glance.db.password }}@{{ address('mariadb') }}/{{ glance.db.name }}
 max_retries = -1
