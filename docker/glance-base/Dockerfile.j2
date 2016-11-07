@@ -1,8 +1,7 @@
 FROM {{ image_spec("openstack-base") }}
 MAINTAINER {{ maintainer }}
 
-COPY sources.list.debian /etc/apt/sources.list.d/ceph.list
-
+COPY {{ render('sources.list.debian.j2') }} /etc/apt/sources.list.d/ceph.list
 {{ copy_sources("openstack/glance", "/glance") }}
 
 RUN useradd --user-group glance \
