@@ -26,6 +26,11 @@ configs:
       store_create_container_on_put: true
       store_container: glance
 
+url:
+  ceph_repository: http://eu.ceph.com/debian-jewel
+  ceph_repository_keyserver: hkp://keyserver.ubuntu.com:80
+  ceph_repository_keyid: 460F3994
+
 sources:
   openstack/glance:
     git_url: https://github.com/openstack/glance.git
