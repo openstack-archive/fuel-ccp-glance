@@ -50,12 +50,12 @@ service:
           dependencies:
             - glance-service-create
           type: single
-          command: openstack endpoint create --region RegionOne image internal http://{{ address('glance-api') }}:{{ glance.api_port.cont }}
+          command: openstack endpoint create --region RegionOne image internal {{ address('glance-api', glance.api_port.cont, with_scheme=True) }}
         - name: glance-admin-endpoint-create
           dependencies:
             - glance-service-create
           type: single
-          command: openstack endpoint create --region RegionOne image admin http://{{ address('glance-api') }}:{{ glance.api_port.cont }}
+          command: openstack endpoint create --region RegionOne image admin {{ address('glance-api', glance.api_port, with_scheme=True) }}
       daemon:
         files:
           - glance-api
