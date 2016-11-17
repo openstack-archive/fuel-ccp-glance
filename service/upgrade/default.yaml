@@ -1,0 +1,30 @@
+upgrade:
+  name: upgrade-glance
+  image: glance-upgrade
+  steps:
+    - name: backup
+      command: /tmp/backup.sh
+      files:
+        - backup-sh
+      volumes:
+        - name: backup-dir
+          path: /var/ccp/backup/glance
+          type: host
+          readOnly: false
+      topology_key: backup
+    - name: kill-services
+      type: kill-services
+    - name: db-sync
+      command: glance-manage db_sync
+      files:
+        - glance-conf
+    - name: start-services
+      type: rolling-upgrade
+files:
+  glance-conf:
+    path: /etc/glance/glance-api.conf
+    content: glance-api.conf.j2
+  backup-sh:
+    path: /tmp/backup.sh
+    content: backup.sh.j2
+    perm: "555"
