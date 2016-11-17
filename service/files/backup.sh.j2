@@ -1,0 +1,6 @@
+#!/bin/bash -ex
+set -o pipefail
+BACKUP_FILE="/var/ccp/backup/glance/backup-$(date "+%Y%m%d%H%M%S").sql"
+mysqldump -h {{ address(service.database) }} \
+    -u {{ glance.db.username }} -p{{ glance.db.password }} \
+    --single-transaction {{ glance.db.name }} > "${BACKUP_FILE}"
