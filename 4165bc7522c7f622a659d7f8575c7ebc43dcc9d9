@@ -1,0 +1,9 @@
+Code-Review+2: Andrey Pavlov <apavlov@mirantis.com>
+Code-Review+2: Proskurin Kirill <kproskurin@mirantis.com>
+Workflow+1: Proskurin Kirill <kproskurin@mirantis.com>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Thu, 17 Nov 2016 16:15:25 +0000
+Reviewed-on: https://review.openstack.org/398996
+Project: openstack/fuel-ccp-glance
+Branch: refs/heads/master
