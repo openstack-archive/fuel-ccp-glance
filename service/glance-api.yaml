@@ -14,10 +14,10 @@ service:
       pre:
         - name: glance-db-create
           dependencies:
-            - mariadb
+            - {{ service.database }}
           type: single
           command:
-            mysql -u root -p{{ db.root_password }} -h {{ address('mariadb') }} -e "create database {{ glance.db.name }};
+            mysql -u root -p{{ db.root_password }} -h {{ address(service.database) }} -e "create database {{ glance.db.name }};
             grant all privileges on {{ glance.db.name }}.* to '{{ glance.db.username }}'@'%' identified by '{{ glance.db.password }}';"
         - name: glance-db-sync
           files:
