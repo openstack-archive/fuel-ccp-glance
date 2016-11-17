@@ -18,7 +18,7 @@ cinder_catalog_info = volume:cinder:internalURL
 show_multiple_locations = True
 
 [database]
-connection = mysql+pymysql://{{ glance.db.username }}:{{ glance.db.password }}@{{ address('mariadb') }}/{{ glance.db.name }}
+connection = mysql+pymysql://{{ glance_db_username }}:{{ glance_db_password }}@{{ address(service.database) }}/{{ glance_db_name }}
 max_retries = -1
 
 [keystone_authtoken]
