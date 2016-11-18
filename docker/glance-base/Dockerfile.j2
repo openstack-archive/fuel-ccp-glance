@@ -4,7 +4,7 @@ MAINTAINER {{ maintainer }}
 COPY {{ render('sources.list.debian.j2') }} /etc/apt/sources.list.d/ceph.list
 {{ copy_sources("openstack/glance", "/glance") }}
 
-RUN useradd --user-group glance \
+RUN useradd --user-group -G microservices glance \
     && apt-key adv --recv-keys --keyserver {{ url.ceph.debian.keyserver }} \
     {{ url.ceph.debian.keyid }} \
     && /var/lib/microservices/venv/bin/pip install --upgrade /glance \
