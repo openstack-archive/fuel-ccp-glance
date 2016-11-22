@@ -22,15 +22,15 @@ connection = mysql+pymysql://{{ glance.db.username }}:{{ glance.db.password }}@{
 max_retries = -1
 
 [keystone_authtoken]
-auth_uri = http://{{ address('keystone') }}:{{ keystone.public_port.cont }}
-auth_url = http://{{ address('keystone') }}:{{ keystone.admin_port.cont }}
+auth_uri = {{ address('keystone', keystone.public_port, with_scheme=True) }}
+auth_url = {{ address('keystone', keystone.admin_port, with_scheme=True) }}
 auth_type = password
 project_domain_id = default
 user_domain_id = default
 project_name = {{ openstack.project_name }}
 username = {{ glance.user }}
 password = {{ glance.password }}
-memcached_servers = {{ address('memcached') }}:{{ memcached.port.cont }}
+memcached_servers = {{ address('memcached', memcached.port) }}
 
 
 [paste_deploy]
