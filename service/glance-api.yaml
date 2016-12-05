@@ -85,7 +85,7 @@ files:
     path: /etc/ceph/ceph.conf
     content: ceph.conf.j2
   glance-ceph-key:
-    path: /etc/ceph/ceph.client.glance.keyring
+    path: /etc/ceph/ceph.client.{{ glance.ceph.username }}.keyring
     content: ceph.client.glance.keyring.j2
   glance-swift-conf:
     path: /etc/glance/glance-swift-store.conf
