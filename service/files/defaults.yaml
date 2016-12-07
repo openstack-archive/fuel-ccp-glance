@@ -25,6 +25,7 @@ configs:
       enable: false
       store_create_container_on_put: true
       store_container: glance
+      store_auth_insecure: false
 
     bootstrap:
       enable: false
