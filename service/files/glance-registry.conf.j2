@@ -8,12 +8,6 @@ use_forwarded_for = True
 bind_host = {{ network_topology["private"]["address"] }}
 bind_port = {{ glance.registry_port.cont }}
 
-registry_host = glance-registry
-
-cinder_catalog_info = volume:cinder:internalURL
-
-show_multiple_locations = True
-
 [database]
 connection = mysql+pymysql://{{ glance.db.username }}:{{ glance.db.password }}@{{ address(service.database) }}/{{ glance.db.name }}
 max_retries = -1
@@ -31,10 +25,6 @@ memcached_servers = {{ address('memcached', memcached.port) }}
 
 [paste_deploy]
 flavor = keystone
-
-[glance_store]
-default_store = file
-filesystem_store_datadir = /var/lib/glance/images/
 
 [oslo_messaging_notifications]
 driver = noop
