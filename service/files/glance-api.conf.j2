@@ -27,7 +27,7 @@ auth_url = {{ address('keystone', keystone.admin_port, with_scheme=True) }}
 auth_type = password
 project_domain_id = default
 user_domain_id = default
-project_name = {{ openstack.project_name }}
+project_name = service
 username = {{ glance.user }}
 password = {{ glance.password }}
 memcached_servers = {{ address('memcached', memcached.port) }}
