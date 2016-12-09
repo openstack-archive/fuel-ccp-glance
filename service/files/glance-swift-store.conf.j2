@@ -1,7 +1,7 @@
 [swift]
 auth_version = 3
 auth_address = {{ address('keystone', keystone.public_port, with_scheme=True) }}/v3
-user = {{ openstack.project_name }}:{{ glance.user }}
+user = service:{{ glance.user }}
 key = {{ glance.password }}
 project_domain_id = default
 user_domain_id = default
