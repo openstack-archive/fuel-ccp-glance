@@ -6,12 +6,6 @@ service:
   containers:
     - name: glance-registry
       image: glance-registry
-      # TODO(sreshetniak): add probes
-      probes:
-        readiness: "true"
-        liveness:
-          command: "true"
-          type: "exec"
       daemon:
         files:
           - glance-registry-conf

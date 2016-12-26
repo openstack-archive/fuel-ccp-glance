@@ -6,12 +6,6 @@ service:
   containers:
     - name: glance-api
       image: glance-api
-      # TODO(sreshetniak): add probes
-      probes:
-        readiness: "true"
-        liveness:
-          command: "true"
-          type: "exec"
       pre:
         - name: glance-db-create
           dependencies:
