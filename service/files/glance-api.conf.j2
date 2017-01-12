@@ -63,8 +63,8 @@ disk_formats = raw
 {% endif %}
 
 {% if searchlight is defined and searchlight.services.glance -%}
-  [oslo_messaging_notifications]
-  driver = {{ searchlight.notification_driver }}
+[oslo_messaging_notifications]
+driver = {{ searchlight.notification_driver }}
 {%- endif %}
 
 {{ oslomessaging[messaging.backend.notifications]('notifications_config') }}

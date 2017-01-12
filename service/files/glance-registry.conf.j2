@@ -27,8 +27,8 @@ memcached_servers = {{ address('memcached', memcached.port) }}
 flavor = keystone
 
 {% if searchlight is defined and searchlight.services.glance -%}
-  [oslo_messaging_notifications]
-  driver = {{ searchlight.notification_driver }}
+[oslo_messaging_notifications]
+driver = {{ searchlight.notification_driver }}
 {%- endif %}
 
 {{ oslomessaging[messaging.backend.notifications]('notifications_config') }}
