@@ -67,4 +67,4 @@ disk_formats = raw
 driver = {{ searchlight.notification_driver }}
 {%- endif %}
 
-{{ oslomessaging[messaging.backend.notifications]('notifications_config') }}
+{{ oslo_messaging[messaging.backend.notifications]('notifications_config') }}
