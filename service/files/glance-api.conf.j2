@@ -67,4 +67,7 @@ disk_formats = raw
 driver = {{ searchlight.notification_driver }}
 {%- endif %}
 
+
+{# rpc config is required for notifications in stable/mitaka #}
+{{ oslo_messaging[messaging.backend.rpc]('rpc_config') }}
 {{ oslo_messaging[messaging.backend.notifications]('notifications_config') }}
