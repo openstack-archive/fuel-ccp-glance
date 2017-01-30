@@ -1,0 +1,6 @@
+upstream glance_api {
+    server 127.0.0.1:{{ glance.api_port.cont }};
+}
+upstream glance_registry {
+    server 127.0.0.1:{{ glance.registry_port.cont }};
+}
