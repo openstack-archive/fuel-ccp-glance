@@ -5,8 +5,15 @@ use_syslog = false
 use_stderr = true
 use_forwarded_for = true
 
+{% if security.tls.enabled %}
+registry_client_protocol = https
+bind_host = 127.0.0.1
+bind_port = {{ glance.tls.api_port }}
+#http_proxy_information = 127.0.0.1:{{ glance.api_port.cont }}
+{% else %}
 bind_host = {{ network_topology["private"]["address"] }}
 bind_port = {{ glance.api_port.cont }}
+{% endif %}
 
 registry_host = glance-registry
 {% if glance.ceph.enable %}
@@ -20,8 +27,8 @@ connection = mysql+pymysql://{{ glance.db.username }}:{{ glance.db.password }}@{
 max_retries = -1
 
 [keystone_authtoken]
-auth_uri = {{ address('keystone', keystone.public_port, with_scheme=True) }}
-auth_url = {{ address('keystone', keystone.admin_port, with_scheme=True) }}
+auth_uri = {{ address('keystone', keystone.public_port, with_scheme=True, tls=True) }}
+auth_url = {{ address('keystone', keystone.admin_port, with_scheme=True, tls=True) }}
 auth_type = password
 project_domain_id = default
 user_domain_id = default

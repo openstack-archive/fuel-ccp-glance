@@ -1,0 +1,48 @@
+{% if security.tls.enabled %}
+daemon off;
+
+events {
+}
+
+http {
+   upstream glance_api {
+       server 127.0.0.1:{{ glance.tls.api_port }};
+   }
+   upstream glance_registry {
+       server 127.0.0.1:{{ glance.tls.registry_port }};
+   }
+
+
+   server {
+           listen {{ glance.api_port.cont }};
+           ssl on;
+           ssl_certificate /etc/nginx/ssl/certs/server-cert.pem;
+           ssl_certificate_key /etc/nginx/ssl/private/server-key.pem;
+           ssl_trusted_certificate /etc/nginx/ssl/certs/ca-cert.pem;
+
+           location / {
+                   proxy_pass http://glance_api;
+                   proxy_set_header Host $host:$server_port;
+                   proxy_set_header X-Real-IP $remote_addr;
+                   proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                   proxy_set_header X-Forwarded-Proto $scheme;
+           }
+   }
+   server {
+           listen {{ glance.registry_port.cont }};
+           ssl on;
+           ssl_certificate /etc/nginx/ssl/certs/server-cert.pem;
+           ssl_certificate_key /etc/nginx/ssl/private/server-key.pem;
+           ssl_trusted_certificate /etc/nginx/ssl/certs/ca-cert.pem;
+
+           location / {
+                   proxy_pass http://glance_registry;
+                   proxy_set_header Host $host:$server_port;
+                   proxy_set_header X-Real-IP $remote_addr;
+                   proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                   proxy_set_header X-Forwarded-Proto $scheme;
+           }
+   }
+
+}
+{% endif %}

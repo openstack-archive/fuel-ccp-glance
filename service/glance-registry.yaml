@@ -16,8 +16,37 @@ service:
         dependencies:
           - glance-api
         command: glance-registry
+    # {% if security.tls.enabled %}
+    - name: nginx
+      image: nginx
+      daemon:
+        files:
+          - nginx
+          - ca_cert
+          - server-cert
+          - server-key
+        command: nginx
+    # {% endif %}
 
 files:
   glance-registry-conf:
     path: /etc/glance/glance-registry.conf
     content: glance-registry.conf.j2
+  # {% if security.tls.enabled %}
+  nginx:
+    path: /etc/nginx/nginx.conf
+    content: nginx.conf.j2
+    perm: "0400"
+  ca_cert:
+    path: /etc/nginx/ssl/certs/ca-cert.pem
+    content: ca-cert.pem.j2
+    perm: "0400"
+  server-cert:
+    path: /etc/nginx/ssl/certs/server-cert.pem
+    content: server-cert.pem.j2
+    perm: "0400"
+  server-key:
+    path: /etc/nginx/ssl/private/server-key.pem
+    content: server-key.pem.j2
+    perm: "0400"
+  # {% endif %}
