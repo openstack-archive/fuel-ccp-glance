@@ -5,7 +5,11 @@ use_syslog = false
 use_stderr = true
 use_forwarded_for = true
 
+{% if security.tls.enabled %}
+bind_host = 127.0.0.1
+{% else %}
 bind_host = {{ network_topology["private"]["address"] }}
+{% endif %}
 bind_port = {{ glance.registry_port.cont }}
 
 [database]
@@ -13,8 +17,11 @@ connection = mysql+pymysql://{{ glance.db.username }}:{{ glance.db.password }}@{
 max_retries = -1
 
 [keystone_authtoken]
-auth_uri = {{ address('keystone', keystone.public_port, with_scheme=True) }}
-auth_url = {{ address('keystone', keystone.admin_port, with_scheme=True) }}
+auth_uri = {{ address('keystone', keystone.public_port, with_scheme=True, tls=True) }}
+auth_url = {{ address('keystone', keystone.admin_port, with_scheme=True, tls=True) }}
+{% if security.tls.enabled %}
+cafile = /etc/glance/certs/ca-cert.pem
+{% endif %}
 auth_type = password
 project_domain_id = default
 user_domain_id = default
