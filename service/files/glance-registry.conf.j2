@@ -5,7 +5,11 @@ use_syslog = false
 use_stderr = true
 use_forwarded_for = true
 
+{% if glance.tls.enabled %}
+bind_host = 127.0.0.1
+{% else %}
 bind_host = {{ network_topology["private"]["address"] }}
+{% endif %}
 bind_port = {{ glance.registry_port.cont }}
 
 [database]
