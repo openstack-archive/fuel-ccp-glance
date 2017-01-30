@@ -61,6 +61,9 @@ service:
       daemon:
         files:
           - glance-api
+          # {% if glance.tls.enabled %}
+          - ca_cert
+          # {% endif %}
           # {% if glance.ceph.enable %}
           - ceph-conf
           - glance-ceph-key
@@ -79,6 +82,17 @@ service:
           files:
             - glance-cirros-image-upload.sh
       # {% endif %}
+    # {% if glance.tls.enabled %}
+    - name: nginx-glance-api
+      image: nginx
+      daemon:
+        files:
+          - upstreams
+          - servers
+          - server-cert
+          - server-key
+        command: nginx
+    # {% endif %}
 
 files:
   glance-api:
@@ -97,3 +111,24 @@ files:
     path: /opt/ccp/bin/glance-cirros-image-upload.sh
     content: glance-cirros-image-upload.sh.j2
     perm: "500"
+  # {% if glance.tls.enabled %}
+  servers:
+    path: /etc/nginx/conf.d/servers.conf
+    content: nginx-api.conf.j2
+    perm: "0400"
+  upstreams:
+    path: /etc/nginx/conf.d/upstreams.conf
+    content: upstreams.conf.j2
+    perm: "0400"
+  ca_cert:
+    path: /opt/ccp/etc/tls/ca.pem
+    content: ca-cert.pem.j2
+  server-cert:
+    path: /opt/ccp/etc/tls/server-cert.pem
+    content: server-cert.pem.j2
+    perm: "0400"
+  server-key:
+    path: /opt/ccp/etc/tls/server-key.pem
+    content: server-key.pem.j2
+    perm: "0400"
+  # {% endif %}

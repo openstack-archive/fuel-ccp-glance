@@ -1,5 +1,7 @@
 configs:
   glance:
+    tls:
+      enabled: true
     api_port:
       cont: 9292
       ingress: image
