@@ -1,5 +1,8 @@
 configs:
   glance:
+    tls:
+      api_port: 10292
+      registry_port: 10191
     api_port:
       cont: 9292
       ingress: image
