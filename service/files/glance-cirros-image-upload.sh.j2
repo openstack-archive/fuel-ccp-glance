@@ -8,10 +8,10 @@ export OS_USER_DOMAIN_NAME=default
 export OS_PASSWORD={{ openstack.user_password }}
 export OS_USERNAME={{ openstack.user_name }}
 export OS_PROJECT_NAME={{ openstack.project_name }}
-export OS_AUTH_URL="http://{{ address('keystone', keystone.admin_port) }}/v3"
+export OS_AUTH_URL="{{ address('keystone', keystone.admin_port, with_scheme=True) }}/v3"
 
 {% set image = glance.bootstrap.image %}
 FILE="$(mktemp)"
 curl {{ image.url }} -o "${FILE}"
-openstack image create --public --disk-format {{ image.disk_format }} --file "${FILE}" {{ image.name }}
+openstack image create --public --disk-format {{ image.disk_format }} --file "${FILE}" {{ image.name }} --insecure
 rm "${FILE}"
