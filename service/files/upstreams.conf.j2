@@ -1,0 +1,10 @@
+{% if security.tls.enabled %}
+
+upstream glance_api {
+    server 127.0.0.1:{{ glance.tls.api_port }};
+}
+upstream glance_registry {
+    server 127.0.0.1:{{ glance.tls.registry_port }};
+}
+
+{% endif %}
