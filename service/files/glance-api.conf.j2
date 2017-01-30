@@ -5,7 +5,12 @@ use_syslog = false
 use_stderr = true
 use_forwarded_for = true
 
+{% if security.tls.enabled %}
+registry_client_protocol = https
+bind_host = 127.0.0.1
+{% else %}
 bind_host = {{ network_topology["private"]["address"] }}
+{% endif %}
 bind_port = {{ glance.api_port.cont }}
 
 registry_host = glance-registry
@@ -22,6 +27,9 @@ max_retries = -1
 [keystone_authtoken]
 auth_uri = {{ address('keystone', keystone.public_port, with_scheme=True) }}
 auth_url = {{ address('keystone', keystone.admin_port, with_scheme=True) }}
+{% if security.tls.enabled %}
+cafile = /opt/ccp/etc/tls/ca.pem
+{% endif %}
 auth_type = password
 project_domain_id = default
 user_domain_id = default
@@ -71,3 +79,11 @@ driver = {{ searchlight.notification_driver }}
 {# rpc config is required for notifications in stable/mitaka #}
 {{ oslo_messaging[messaging.backend.rpc]('rpc_config') }}
 {{ oslo_messaging[messaging.backend.notifications]('notifications_config') }}
+
+{% if security.tls.enabled %}
+[oslo_messaging_rabbit]
+rpc_backend = neutron.openstack.common.rpc.impl_kombu
+kombu_ssl_version="TLSv1_2"
+rabbit_use_ssl = true
+kombu_ssl_ca_certs = /opt/ccp/etc/tls/ca.pem
+{% endif %}
