@@ -44,20 +44,23 @@ service:
           dependencies:
             - glance-service-create
           type: single
-          command: openstack endpoint create --region RegionOne image public {{ address('glance-api', glance.api_port, external=True, with_scheme=True) }}
+          command: openstack endpoint create --region RegionOne image public {{ address('glance-api', glance.api_port, external=True, with_scheme=True, tls=True) }}
         - name: glance-internal-endpoint-create
           dependencies:
             - glance-service-create
           type: single
-          command: openstack endpoint create --region RegionOne image internal {{ address('glance-api', glance.api_port, with_scheme=True) }}
+          command: openstack endpoint create --region RegionOne image internal {{ address('glance-api', glance.api_port, with_scheme=True, tls=True) }}
         - name: glance-admin-endpoint-create
           dependencies:
             - glance-service-create
           type: single
-          command: openstack endpoint create --region RegionOne image admin {{ address('glance-api', glance.api_port, with_scheme=True) }}
+          command: openstack endpoint create --region RegionOne image admin {{ address('glance-api', glance.api_port, with_scheme=True, tls=True) }}
       daemon:
         files:
           - glance-api
+          # {% if security.tls.enabled %}
+          - ca_cert_client
+          # {% endif %}
           # {% if glance.ceph.enable %}
           - ceph-conf
           - glance-ceph-key
@@ -74,6 +77,16 @@ service:
           files:
             - glance-cirros-image-upload.sh
       # {% endif %}
+    # {% if security.tls.enabled %}
+    - name: nginx
+      image: nginx
+      daemon:
+        files:
+          - nginx
+          - server-cert
+          - server-key
+        command: nginx
+    # {% endif %}
 
 files:
   glance-api:
@@ -92,3 +105,20 @@ files:
     path: /opt/ccp/bin/glance-cirros-image-upload.sh
     content: glance-cirros-image-upload.sh.j2
     perm: "500"
+  # {% if security.tls.enabled %}
+  ca_cert_client:
+    path: /etc/glance/certs/ca-cert.pem
+    content: ca-cert.pem.j2
+  nginx:
+    path: /etc/nginx/nginx.conf
+    content: nginx-api.conf.j2
+    perm: "0400"
+  server-cert:
+    path: /etc/nginx/ssl/certs/server-cert.pem
+    content: server-cert.pem.j2
+    perm: "0400"
+  server-key:
+    path: /etc/nginx/ssl/private/server-key.pem
+    content: server-key.pem.j2
+    perm: "0400"
+  # {% endif %}
