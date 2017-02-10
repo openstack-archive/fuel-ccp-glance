@@ -19,17 +19,7 @@ show_multiple_locations = true
 connection = mysql+pymysql://{{ glance.db.username }}:{{ glance.db.password }}@{{ address(service.database) }}/{{ glance.db.name }}
 max_retries = -1
 
-[keystone_authtoken]
-auth_uri = {{ address('keystone', keystone.public_port, with_scheme=True) }}
-auth_url = {{ address('keystone', keystone.admin_port, with_scheme=True) }}
-auth_type = password
-project_domain_id = default
-user_domain_id = default
-project_name = service
-username = {{ glance.user }}
-password = {{ glance.password }}
-memcached_servers = {{ address('memcached', memcached.port) }}
-
+{{ keystone_authtoken(glance.user, glance.password) }}
 
 [paste_deploy]
 flavor = keystone
