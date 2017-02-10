@@ -14,7 +14,7 @@ service:
         files:
           - glance-registry-conf
         dependencies:
-          - glance-api
+          - glance-db-sync
         command: glance-registry
 
 files:
