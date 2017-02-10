@@ -23,9 +23,9 @@ max_retries = -1
 auth_uri = {{ address('keystone', keystone.public_port, with_scheme=True) }}
 auth_url = {{ address('keystone', keystone.admin_port, with_scheme=True) }}
 auth_type = password
-project_domain_id = default
-user_domain_id = default
-project_name = service
+project_domain_name = {{ service_account.domain }}
+user_domain_name = {{ service_account.domain }}
+project_name = {{ service_account.project }}
 username = {{ glance.user }}
 password = {{ glance.password }}
 memcached_servers = {{ address('memcached', memcached.port) }}
