@@ -1,0 +1,9 @@
+actions:
+  - name: glance-db-sync
+    image: glance-base
+    dependencies:
+      - glance-db-create
+    command: glance-manage db_sync
+    files:
+      - path: /etc/glance/glance-api.conf
+        content: glance-api.conf.j2
