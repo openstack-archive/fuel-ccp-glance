@@ -27,14 +27,15 @@ service:
           command: glance-manage db_sync
         - name: glance-user-create
           dependencies:
-            - keystone-create-domain
+            - keystone
           type: single
-          command: openstack user create --domain {{ service_account.domain }} --password {{ glance.password  }} {{ glance.user }}
+          command: openstack user create --domain default --password {{ glance.password  }} {{ glance.user }}
         - name: glance-role-add
           dependencies:
             - glance-user-create
+            - keystone-create-project
           type: single
-          command: openstack role add --domain {{ service_account.domain }} --user {{ glance.user }} admin
+          command: openstack role add --project service --user {{ glance.user }} admin
         - name: glance-service-create
           dependencies:
             - keystone
