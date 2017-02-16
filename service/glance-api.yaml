@@ -37,7 +37,7 @@ service:
           dependencies:
             - glance-user-create
           type: single
-          command: openstack role add --domain {{ service_account.domain }} --user {{ glance.user }} admin
+          command: openstack role add --project {{ service_account.project }} --user {{ glance.user }} admin
         - name: glance-service-create
           dependencies:
             - keystone
