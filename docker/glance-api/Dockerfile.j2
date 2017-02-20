@@ -4,6 +4,7 @@ MAINTAINER {{ maintainer }}
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
            mysql-client \
+    && apt-get install -y --no-install-recommends -t jessie-backports \
            ceph-common \
            python-ceph \
            python-rados \
