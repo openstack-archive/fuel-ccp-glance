@@ -13,10 +13,10 @@ service:
       pre:
         - name: glance-db-create
           dependencies:
-            - {{ service.database }}
+            - {{ database }}
           type: single
           command:
-            mysql -u root -p{{ db.root_password }} -h {{ address(service.database) }} -e "create database {{ glance.db.name }};
+            mysql -u root -p{{ db.root_password }} -h {{ address(database) }} -e "create database {{ glance.db.name }};
             create user '{{ glance.db.username }}'@'%' identified by '{{ glance.db.password }}'
             {% if db.tls.enabled %} require ssl {% endif %};
             grant all privileges on {{ glance.db.name }}.* to '{{ glance.db.username }}'@'%' identified by '{{ glance.db.password }}'
