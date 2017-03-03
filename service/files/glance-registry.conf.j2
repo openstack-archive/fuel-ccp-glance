@@ -13,7 +13,7 @@ bind_host = {{ network_topology["private"]["address"] }}
 bind_port = {{ glance.registry_port.cont }}
 
 [database]
-connection = mysql+pymysql://{{ glance.db.username }}:{{ glance.db.password }}@{{ address(service.database) }}/{{ glance.db.name }}{% if db.tls.enabled %}?ssl_ca=/opt/ccp/etc/tls/ca.pem{% endif %}
+connection = mysql+pymysql://{{ glance.db.username }}:{{ glance.db.password }}@{{ address("database") }}/{{ glance.db.name }}{% if db.tls.enabled %}?ssl_ca=/opt/ccp/etc/tls/ca.pem{% endif %}
 max_retries = -1
 
 {{ keystone_authtoken.keystone_authtoken(glance.user, glance.password) }}
