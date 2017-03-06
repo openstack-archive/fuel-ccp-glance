@@ -7,21 +7,11 @@ configs:
       ingress: image
     registry_port:
       cont: 9191
-    db:
-      username: glance
-      password: password
-      name: glance
-
-    user: glance
-    password: password
 
     debug: false
 
     ceph:
       enable: false
-      key: "Changeme"
-      username: "glance"
-      pool_name: "images"
 
     swift:
       enable: false
@@ -35,6 +25,19 @@ configs:
         url: http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-disk.img
         disk_format: qcow2
         name: cirros
+
+secret_configs:
+  glance:
+    db:
+      username: glance
+      password: password
+      name: glance
+    user: glance
+    password: password
+    ceph:
+      key: "Changeme"
+      username: "glance"
+      pool_name: "images"
 
 sources:
   openstack/glance:
