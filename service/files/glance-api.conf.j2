@@ -46,6 +46,9 @@ default_swift_reference = swift
 swift_store_container = {{ glance.swift.store_container }}
 swift_store_config_file = /etc/glance/glance-swift-store.conf
 swift_store_auth_insecure = {{ glance.swift.store_auth_insecure }}
+{% if security.tls.create_certificates %}
+swift_store_cacert = /opt/ccp/etc/tls/ca.pem
+{% endif %}
 {% else %}
 stores = http,file
 default_store = file
